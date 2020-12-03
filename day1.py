@@ -1,8 +1,10 @@
+#open file and list inputs
 with open("expense_report.txt","r") as expense_report:
     expense_list = []
     for line in expense_report.readlines():
         expense_list.append(line)
 
+#3 nested loops check for sum of 2 and 3 inputs and break when done
 checkDouble = False
 checkTriple = False
 for numA,expenseA in enumerate(expense_list):
@@ -25,23 +27,17 @@ for numA,expenseA in enumerate(expense_list):
         if (checkDouble == True) and (checkTriple == True): break
     if (checkDouble == True) and (checkTriple == True): break
 
-strA = "DOUBLE:\nFirst number is "+doubleA+"\n"
-strB = "Second number is "+doubleB+"\n"
+#output answers to file
+strout = []
+strout.append("DOUBLE:\nFirst number is "+doubleA+"\n")
+strout.append("Second number is "+doubleB+"\n")
 productDouble = int(doubleA)*int(doubleB)
-strC = "Product is "+str(productDouble)+"\n\n"
-strD = "TRIPLE:\nFirst number is "+tripleA+"\n"
-strE = "Second number is "+tripleB+"\n"
-strF = "Second number is "+tripleC+"\n"
+strout.append("Product is "+str(productDouble)+"\n\n")
+strout.append("TRIPLE:\nFirst number is "+tripleA+"\n")
+strout.append("Second number is "+tripleB+"\n")
+strout.append("Second number is "+tripleC+"\n")
 productTriple = int(tripleA)*int(tripleB)*int(tripleC)
-strG = "Product is "+str(productTriple)+"\n"
-
-print("aaaa")
+strout.append("Product is "+str(productTriple)+"\n")
 
 with open("outtest.txt","w") as outfile:
-    outfile.write(strA)
-    outfile.write(strB)
-    outfile.write(strC)
-    outfile.write(strD)
-    outfile.write(strE)
-    outfile.write(strF)
-    outfile.write(strG)
+    for outline in strout: outfile.write(outline)
