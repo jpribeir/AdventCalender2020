@@ -12,9 +12,6 @@ class Passenger:
         # set passport info from input
         self.set_passport(info)
 
-    def aaa(self):
-        return
-
     # set info
     def set_passport(self,info):
         for each in info:
