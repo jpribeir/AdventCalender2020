@@ -15,7 +15,7 @@ class Toboggan:
         elif line[self.start_point] == tree_spot: self.countTree +=1
 
 #open input file and list inputs
-with open("tree_map.txt","r") as tree_map:
+with open("../input_files/tree_map.txt","r") as tree_map:
     tree_map_list = []
     for line in tree_map.readlines(): tree_map_list.append(line)
 

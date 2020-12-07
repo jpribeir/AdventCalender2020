@@ -1,5 +1,5 @@
 #open file and list inputs
-with open("expense_report.txt","r") as expense_report:
+with open("../input_files/expense_report.txt","r") as expense_report:
     expense_list = []
     for line in expense_report.readlines():
         expense_list.append(line)

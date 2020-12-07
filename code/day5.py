@@ -22,7 +22,7 @@ for row in range(max_row+1):
     for col in range(max_col+1): seat_matrix[row].append(False)
 
 # open input file and go thorugh each seat ID
-with open("plane_seats.txt","r") as plane_seats:
+with open("../input_files/plane_seats.txt","r") as plane_seats:
     for line in plane_seats.readlines():
         seat_row = bin_to_dec(line[0:numchar_row],max_row)
         seat_col = bin_to_dec(line[numchar_row:-1],max_col)

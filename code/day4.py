@@ -44,7 +44,7 @@ class Passenger:
         else: return False
 
 # open input file and go thorugh each passport and register into objects
-with open("passports.txt","r") as passports:
+with open("../input_files/passports.txt","r") as passports:
     passenger_info = []
     count_valid = 0
     for line in passports.readlines():

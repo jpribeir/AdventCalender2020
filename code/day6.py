@@ -1,5 +1,5 @@
 # open input file
-with open("form_answers.txt","r") as form_answers:
+with open("../input_files/form_answers.txt","r") as form_answers:
     group = {}
     num_ppl = 0
     count_yes = 0
