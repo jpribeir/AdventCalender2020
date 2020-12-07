@@ -1,0 +1,6 @@
+*----- FIRST PART -----*
+There are 416 valid passwords
+
+*----- SECOND PART -----*
+There are 688 valid passwords
+
