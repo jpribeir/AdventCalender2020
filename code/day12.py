@@ -14,26 +14,53 @@ def turn_direction(side,value,cardinal):
     else: cycle = int(-value/90)
     return cardinal[cycle:] + cardinal[:cycle]
 
-# open input file and list rows of seats
+# just switch ns and ew values and change signals according to side
+def rotate_direction(side,value,ns_offset,ew_offset):
+    cycle = int(value/90)
+    if side == "R":
+        for i in range(cycle):
+            offset_buf = ew_offset
+            ew_offset = ns_offset
+            ns_offset = -offset_buf
+    else:
+        for i in range(cycle):
+            offset_buf = ns_offset
+            ns_offset = ew_offset
+            ew_offset = -offset_buf
+    return ns_offset,ew_offset
+    
+# starting positions, first element in cardinal is where ship is facing
+ns_A = 0
+ew_A = 0
+cardinal = ["E","S","W","N"]
+ns_B = 0
+ew_B = 0
+ns_waypoint = 1
+ew_waypoint = 10
+
+# open input file and loop through instructions
 with open("../input_files/navigation_instructions.txt","r") as nav_inst:
     inst_list = []
-    for line in nav_inst.readlines(): inst_list.append(line.strip())
-    
-# starting position, first element in cardinal is where ship is facing
-ns_pos = 0
-ew_pos = 0
-cardinal = ["E","S","W","N"]
+    for line in nav_inst.readlines():
+        par = re.search("([A-Z])([0-9]*)",line.strip())
+        if par:
+            coordir = par.group(1)
+            coorval = int(par.group(2))
+        else: quit()
 
-# each instruction moves or turns the ship
-for line in inst_list:
-    par = re.search("([A-Z])([0-9]*)",line)
-    if par:
-        coordir = par.group(1)
-        coorval = int(par.group(2))
-    else: quit()
-    if coordir in cardinal: ns_pos,ew_pos = move_direction(coordir,coorval,ns_pos,ew_pos)
-    elif coordir == "F": ns_pos,ew_pos = move_direction(cardinal[0],coorval,ns_pos,ew_pos)
-    elif coordir in ["R","L"]: cardinal = turn_direction(coordir,coorval,cardinal)
-manhattan_val = abs(ns_pos)+abs(ew_pos)
+        # first part
+        if coordir in cardinal: ns_A,ew_A = move_direction(coordir,coorval,ns_A,ew_A)
+        elif coordir == "F": ns_A,ew_A = move_direction(cardinal[0],coorval,ns_A,ew_A)
+        elif coordir in ["R","L"]: cardinal = turn_direction(coordir,coorval,cardinal)
 
-print("*----- FIRST PART -----*\nThe Manhattan distance is %s\n" % manhattan_val)
+        # second part
+        if coordir in cardinal: ns_waypoint,ew_waypoint = move_direction(coordir,coorval,ns_waypoint,ew_waypoint)
+        elif coordir == "F":
+            ns_B,ew_B = move_direction("N",coorval*ns_waypoint,ns_B,ew_B)
+            ns_B,ew_B = move_direction("E",coorval*ew_waypoint,ns_B,ew_B)
+        elif coordir in ["R","L"]: ns_waypoint,ew_waypoint = rotate_direction(coordir,coorval,ns_waypoint,ew_waypoint)
+manhattanA = abs(ns_A)+abs(ew_A)
+manhattanB = abs(ns_B)+abs(ew_B)
+
+print("*----- FIRST PART -----*\nThe Manhattan distance is %s\n" % manhattanA)
+print("*----- SECOND PART -----*\nThe Manhattan distance is %s\n" % manhattanB)
